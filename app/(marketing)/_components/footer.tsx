@@ -4,7 +4,7 @@ import Logo from './logo'
 
 const Footer = () => {
     return (
-        <div className='fixed items-center w-full p-6 bg-background z-50 bottom-0 hidden md:flex'>
+        <div className='items-center w-full bg-background z-50 bottom-0 hidden md:flex  dark:bg-[#1F1F1F]'>
             <Logo />
         </div>
     )

@@ -8,13 +8,20 @@ const Heroes = () => {
             <div className='flex items-center'>
 
                 <div>
-                    <Image src='/think-dark.png' alt='Hero 1' width={400} height={400} />
-
+                    <Image src='/think-dark.png' alt='Hero 1' width={400} height={400}
+                        className='dark:hidden' />
+                    <Image src='/think-light.png' alt='Hero 1' width={400} height={400}
+                        className='hidden dark:block' />
                 </div>
                 <div className='hidden md:block'>
-                    <Image src='/play-dark.png' alt='Hero 2' width={500} height={500} />
+                    <Image src='/CoffeeMan-dark.png' alt='Hero 2' width={400} height={400}
+                        className='dark:hidden' />
 
+                    <Image src='/CoffeeMan-light.png' alt='Hero 2' width={400} height={400}
+                        className='hidden dark:block' />
                 </div>
+
+
             </div>
         </div>
     )
