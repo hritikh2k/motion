@@ -10,8 +10,8 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 
     if (isLoading) {
         return (
-            <div className='h-full flex items-center justify-center'>
-                <Spinner />
+            <div className='h-screen flex items-center justify-center'>
+                <Spinner size='lg' />
             </div>
         )
     }
@@ -19,9 +19,9 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         return redirect('/')
     }
     return (
-        <div className='h-full flex dark:bg-[#1F1F1F]'>
+        <div className='h-screen flex dark:bg-[#1F1F1F]'>
             <Navigation />
-            <main className='h-full flex-1 overflow-y-auto'>
+            <main className='flex-1 h-full overflow-y-auto'>
                 {children}
             </main>
         </div>
