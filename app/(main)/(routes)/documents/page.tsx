@@ -12,7 +12,7 @@ const page = () => {
             <Image className='dark:hidden' src='/action-dark.png' alt='empty' width={400} height={400} />
             <Image className='hidden dark:block' src='/action-light.png' alt='empty' width={400} height={400} />
 
-            <h1 className=''>Welcome to {user?.firstName}'s Motion </h1>
+            <h1 className='font-bold'>Welcome to {user?.firstName}'s Motion </h1>
             <Button><PlusCircle />Create notes</Button>
 
         </div>
