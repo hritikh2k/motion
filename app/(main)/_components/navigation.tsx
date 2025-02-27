@@ -1,10 +1,17 @@
 'use client'
 import { cn } from '@/lib/utils';
-import { ChevronsLeft, MenuIcon } from 'lucide-react'
+import {
+    ChevronsLeft, MenuIcon, PlusCircle, Search, Settings
+} from 'lucide-react'
 import { usePathname } from 'next/navigation';
-import React, { RefObject, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts';
 import UserItem from './userItem';
+import { api } from '@/convex/_generated/api';
+import { useMutation } from 'convex/react';
+import { Item } from './item';
+import { toast } from 'sonner';
+import { DocumentList } from './documentList';
 
 const Navigation = () => {
     const isMobile = useMediaQuery("(max-width: 768px)");
@@ -15,6 +22,17 @@ const Navigation = () => {
     const [isResetting, setIsResetting] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(isMobile);
 
+    const create = useMutation(api.documents.create);
+
+    const onCreateHandler = () => {
+        const promise = create({ title: "Untitiled" });
+        toast.promise(promise, {
+            loading: "Creating document",
+            success: "Created successfully",
+            error: "Something went wrong "
+        })
+
+    }
     useEffect(() => {
         if (isMobile) {
             handleCollaps();
@@ -94,12 +112,24 @@ const Navigation = () => {
                 </div>
                 <div>
                     <UserItem />
-                </div>
-                <div className='pt-4'>
-                    <p>
-                        Documents
-                    </p>
+                    <Item
+                        onClick={() => { }}
+                        label='Setting'
+                        icon={Settings} />
+                    <Item
+                        onClick={() => { }}
+                        label='Search'
+                        icon={Search}
+                        isSearch />
 
+                    <Item
+                        onClick={onCreateHandler}
+                        label="New page"
+                        icon={PlusCircle}
+                    />
+                </div>
+                <div className='mt-4'>
+                    <DocumentList />
                 </div>
                 <div
                     onMouseDown={handleMouseDown}
