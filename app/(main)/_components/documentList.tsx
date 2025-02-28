@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Item } from './item'
 import { FileIcon } from 'lucide-react'
+
 interface DocumentListProps {
     parentDocumentId?: Id<"documents">,
     level?: number,
