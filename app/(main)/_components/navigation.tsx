@@ -24,6 +24,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import TrashBox from "./trashbox";
+import { useSearch } from "@/hooks/useSearch";
 
 const Navigation = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -33,7 +34,7 @@ const Navigation = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
-
+  const search = useSearch()
   const create = useMutation(api.documents.create);
 
   const onCreateHandler = () => {
@@ -134,8 +135,8 @@ const Navigation = () => {
         </div>
         <div>
           <UserItem />
-          <Item onClick={() => {}} label="Setting" icon={Settings} />
-          <Item onClick={() => {}} label="Search" icon={Search} isSearch />
+          <Item onClick={() => { }} label="Setting" icon={Settings} />
+          <Item onClick={search.onOpen} label="Search" icon={Search} isSearch />
 
           <Item onClick={onCreateHandler} label="New page" icon={PlusCircle} />
         </div>
@@ -149,7 +150,7 @@ const Navigation = () => {
             <PopoverContent
               side={isMobile ? "bottom" : "right"}
               className="p-0 w-72"
-              onClick={() => {}}
+              onClick={() => { }}
             >
               <TrashBox />
             </PopoverContent>
