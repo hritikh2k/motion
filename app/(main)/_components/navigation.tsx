@@ -9,7 +9,7 @@ import {
   Settings,
   Trash,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import UserItem from "./userItem";
@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/popover";
 import TrashBox from "./trashbox";
 import { useSearch } from "@/hooks/useSearch";
+import { useSetting } from "@/hooks/useSetting";
+import { Navbar } from "./navbar";
 
 const Navigation = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -36,6 +38,8 @@ const Navigation = () => {
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
   const search = useSearch()
   const create = useMutation(api.documents.create);
+  const settings = useSetting()
+  const param = useParams();
 
   const onCreateHandler = () => {
     const promise = create({ title: "Untitiled" });
@@ -135,7 +139,7 @@ const Navigation = () => {
         </div>
         <div>
           <UserItem />
-          <Item onClick={() => { }} label="Setting" icon={Settings} />
+          <Item onClick={settings.onOpen} label="Setting" icon={Settings} />
           <Item onClick={search.onOpen} label="Search" icon={Search} isSearch />
 
           <Item onClick={onCreateHandler} label="New page" icon={PlusCircle} />
@@ -170,14 +174,20 @@ const Navigation = () => {
           isMobile && "left-0 w-full",
         )}
       >
-        <nav
-          onClick={handleResetWidth}
-          className="bg-transparent px-3 py-2 w-full "
-        >
-          {isCollapsed && (
-            <MenuIcon role="button" className="w-6 h-6 text-muted-foreground" />
-          )}
-        </nav>
+        {!!param.documentId ? (<Navbar
+          isCollapsed={isCollapsed}
+          onResetWidth={handleResetWidth}
+        />
+        ) : (
+          <nav
+            onClick={handleResetWidth}
+            className="bg-transparent px-3 py-2 w-full "
+          >
+            {isCollapsed && (
+              <MenuIcon role="button" className="w-6 h-6 text-muted-foreground" />
+            )}
+          </nav>
+        )}
       </div>
     </>
   );

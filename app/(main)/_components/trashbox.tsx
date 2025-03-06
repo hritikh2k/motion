@@ -1,5 +1,5 @@
 "use client"
-import { ConfirmModel } from '@/components/modals/confirmModel';
+import { ConfirmModel } from '@/components/models/ConfirmModel';
 import Spinner from '@/components/spinner';
 import { Input } from '@/components/ui/input';
 import { api } from '@/convex/_generated/api';
@@ -90,7 +90,7 @@ const TrashBox = () => {
               <div
                 onClick={(e) => { onRestore(e, document._id) }}
                 role='button'
-                className='rounded-sm p-2 hover:bg-neutral-200'
+                className='rounded-sm p-2 hover:bg-neutral-200 dark:bg-neutral-600'
               >
                 <Undo className='h-4 w-4 text-muted-foreground' />
 
@@ -99,7 +99,7 @@ const TrashBox = () => {
               <ConfirmModel onConfirm={() => { onRemove(document._id) }}>
                 <div
                   role='button'
-                  className='rounded-sm p-2 hover:bg-neutral-200'
+                  className='rounded-sm p-2 hover:bg-neutral-200 dark:bg-neutral-600'
                 >
                   <Trash className='h-4 w-4 text-muted-foreground' />
                 </div>
