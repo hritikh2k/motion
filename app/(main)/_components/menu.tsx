@@ -1,6 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Skeleton } from "@/components/ui/skeleton"
 import { api } from "@/convex/_generated/api"
 import { Id } from "@/convex/_generated/dataModel"
 import { useUser } from "@clerk/clerk-react"
@@ -42,8 +43,8 @@ export const Menu = ({
                 align="end"
                 alignOffset={8}
                 forceMount>
-                <DropdownMenuItem onClick={onArchive} className="flex gap-2 text-sm">
-                    <Trash role="button" className="h-4 w-4 mt-[0.5px]" />Delete
+                <DropdownMenuItem onClick={onArchive} role="button" className="flex gap-2 text-sm">
+                    <Trash className="h-4 w-4 mt-[0.5px]" />Delete
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <div className="text-sm text-muted-foreground">
@@ -51,5 +52,10 @@ export const Menu = ({
                 </div>
             </DropdownMenuContent>
         </DropdownMenu>
+    )
+}
+Menu.Skeleton = function () {
+    return (
+        <Skeleton className="h-10 w-10" />
     )
 }
