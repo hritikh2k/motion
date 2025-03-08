@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/provider/themeProvider";
 import { ConvexClientProvider } from "@/components/provider/convexProvider";
 import { Toaster } from "sonner";
 import { ModelProvider } from "@/components/provider/modelProvider";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,16 +44,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ConvexClientProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Toaster position="bottom-center" />
-            <ModelProvider />
-            {children}
-          </ThemeProvider>
+          <EdgeStoreProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Toaster position="bottom-center" />
+              <ModelProvider />
+              {children}
+            </ThemeProvider>
+          </EdgeStoreProvider>
         </ConvexClientProvider>
       </body>
     </html>
