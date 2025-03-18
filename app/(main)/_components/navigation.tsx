@@ -9,7 +9,7 @@ import {
   Settings,
   Trash,
 } from "lucide-react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import UserItem from "./userItem";
@@ -40,9 +40,11 @@ const Navigation = () => {
   const create = useMutation(api.documents.create);
   const settings = useSetting()
   const param = useParams();
+  const router = useRouter();
 
   const onCreateHandler = () => {
-    const promise = create({ title: "Untitiled" });
+    const promise = create({ title: "Untitiled" })
+      .then((DocumentIdPage) => router.push(`/documents/${DocumentIdPage}`));
     toast.promise(promise, {
       loading: "Creating document",
       success: "Created successfully",

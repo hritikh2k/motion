@@ -4,6 +4,7 @@ import Spinner from '@/components/spinner';
 import { Input } from '@/components/ui/input';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
+import { useEdgeStore } from '@/lib/edgestore';
 import { useMutation, useQuery } from 'convex/react';
 import { Search, Trash, Undo } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation'
@@ -17,6 +18,7 @@ const TrashBox = () => {
   const restore = useMutation(api.documents.restore);
   const remove = useMutation(api.documents.removeFile);
   const [search, setSearch] = useState("");
+  const { edgestore } = useEdgeStore();
 
   const filterDocuments = documents?.filter((document) => {
     return document.title.toLowerCase().includes(search.toLowerCase());
@@ -39,18 +41,28 @@ const TrashBox = () => {
     });
   };
 
-  const onRemove = (
-    documentId: Id<"documents">
-  ) => {
-    const promise = remove({ id: documentId })
-    toast.promise(promise, {
-      loading: "Deleting File",
-      success: "Deleted successfully",
-      error: "Something went wrong"
-    });
-    if (param.documentId === documentId) {
-      router.push("/documents");
-    };
+  const onRemove = async (documentId: Id<"documents">, coverImage: any) => {
+    try {
+      // Delete the cover image from EdgeStore
+      if (coverImage) {
+        await edgestore.publicFiles.delete({ url: coverImage });
+      }
+
+      // Delete the document
+      const promise = remove({ id: documentId });
+      toast.promise(promise, {
+        loading: "Deleting File",
+        success: "Deleted successfully",
+        error: "Something went wrong"
+      });
+
+      if (param.documentId === documentId) {
+        router.push("/documents");
+      }
+    } catch (error) {
+      console.error("Failed to delete cover image or document:", error);
+      toast.error("Failed to delete cover image or document");
+    }
   };
 
   if (documents === undefined) {
@@ -94,7 +106,7 @@ const TrashBox = () => {
               >
                 <Undo className='h-4 w-4 text-muted-foreground' />
               </div>
-              <ConfirmModel onConfirm={() => { onRemove(document._id) }}>
+              <ConfirmModel onConfirm={() => { onRemove(document._id, document.coverImage) }}>
                 <div
                   role='button'
                   className='rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600'
@@ -103,7 +115,6 @@ const TrashBox = () => {
                 </div>
               </ConfirmModel>
             </div>
-
           </div>
         ))}
       </div>
