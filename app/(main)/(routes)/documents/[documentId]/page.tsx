@@ -2,15 +2,16 @@
 
 import { useParams } from "next/navigation";
 import { Cover } from "@/components/cover";
-import { Editor } from "@/components/editor";
 import { Toolbar } from "@/components/toolbar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
-
+import { useMemo } from "react";
+import dynamic from "next/dynamic"
 const DocumentIdPage = () => {
-    // Directly use useParams() without React.use()
+    const Editor = useMemo(() => dynamic(() => import("@/components/editor"), { ssr: false }), [])
+
     const params = useParams() as { documentId: Id<"documents"> };
 
     const document = useQuery(api.documents.getById, {
