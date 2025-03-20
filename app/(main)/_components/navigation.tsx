@@ -36,15 +36,16 @@ const Navigation = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
-  const search = useSearch()
+  const search = useSearch();
   const create = useMutation(api.documents.create);
-  const settings = useSetting()
+  const settings = useSetting();
   const param = useParams();
   const router = useRouter();
 
   const onCreateHandler = () => {
-    const promise = create({ title: "Untitiled" })
-      .then((DocumentIdPage) => router.push(`/documents/${DocumentIdPage}`));
+    const promise = create({ title: "Untitiled" }).then((DocumentIdPage) =>
+      router.push(`/documents/${DocumentIdPage}`),
+    );
     toast.promise(promise, {
       loading: "Creating document",
       success: "Created successfully",
@@ -156,7 +157,7 @@ const Navigation = () => {
             <PopoverContent
               side={isMobile ? "bottom" : "right"}
               className="p-0 w-72"
-              onClick={() => { }}
+              onClick={() => {}}
             >
               <TrashBox />
             </PopoverContent>
@@ -176,17 +177,18 @@ const Navigation = () => {
           isMobile && "left-0 w-full",
         )}
       >
-        {!!param.documentId ? (<Navbar
-          isCollapsed={isCollapsed}
-          onResetWidth={handleResetWidth}
-        />
+        {!!param.documentId ? (
+          <Navbar isCollapsed={isCollapsed} onResetWidth={handleResetWidth} />
         ) : (
           <nav
             onClick={handleResetWidth}
             className="bg-transparent px-3 py-2 w-full "
           >
             {isCollapsed && (
-              <MenuIcon role="button" className="w-6 h-6 text-muted-foreground" />
+              <MenuIcon
+                role="button"
+                className="w-6 h-6 text-muted-foreground"
+              />
             )}
           </nav>
         )}

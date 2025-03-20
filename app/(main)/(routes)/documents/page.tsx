@@ -15,8 +15,9 @@ const page = () => {
   const router = useRouter();
 
   const onCreateHandler = () => {
-    const promise = create({ title: "Untitiled" })
-      .then((DocumentIdPage) => router.push(`documents/${DocumentIdPage}`));
+    const promise = create({ title: "Untitiled" }).then((DocumentIdPage) =>
+      router.push(`documents/${DocumentIdPage}`),
+    );
     toast.promise(promise, {
       loading: "Creating document",
       success: "Created successfully",
